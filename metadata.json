@@ -1,0 +1,6 @@
+{
+  "name": "HPDC Gate Designer",
+  "description": "Interactive High Pressure Die Casting (HPDC) setup optimizer, simulator, and diagnostic assistant. Computes stroke profiles, sleeve filling, atomization J-numbers, core-pull locks, platen bar moments, and real-time die design/process defect preventions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
