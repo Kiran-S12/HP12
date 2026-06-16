@@ -13,6 +13,8 @@ import { FormulaSheet } from './components/FormulaSheet';
 import { CylinderCalculation } from './components/CylinderCalculation';
 import { TieBarBalance } from './components/TieBarBalance';
 import { DefectExplorer } from './components/DefectExplorer';
+import { PartCostingSheet } from './components/PartCostingSheet';
+import { PQ2Diagram } from './components/PQ2Diagram';
 import { DEFAULT_INPUTS, ALLOYS } from './constants';
 import { 
   Plus, 
@@ -34,14 +36,15 @@ import {
   Save,
   Check,
   ChevronDown,
-  Compass
+  Compass,
+  FileSpreadsheet
 } from 'lucide-react';
 
 export default function App() {
   // Saved designs state (stored in localStorage)
   const [designs, setDesigns] = useState<HPDCInputs[]>([]);
   const [activeDesignId, setActiveDesignId] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'sleeve' | 'gate' | 'formulas' | 'guidelines' | 'cylinder' | 'tiebar' | 'defects'>('sleeve');
+  const [activeTab, setActiveTab] = useState<'sleeve' | 'gate' | 'formulas' | 'guidelines' | 'cylinder' | 'tiebar' | 'defects' | 'costing' | 'pq2'>('sleeve');
   const [showImportModal, setShowImportModal] = useState(false);
   const [importJsonText, setImportJsonText] = useState('');
   const [importError, setImportError] = useState('');
@@ -879,6 +882,28 @@ export default function App() {
                 <TrendingUp className="h-4 w-4" />
                 Guidelines
               </button>
+              <button
+                onClick={() => setActiveTab('costing')}
+                className={`flex-1 py-2 px-3 text-xs font-mono font-bold rounded-none flex items-center justify-center gap-1.5 transition-all uppercase tracking-wide cursor-pointer ${
+                  activeTab === 'costing' 
+                    ? 'bg-cyan-600 text-slate-950 font-black shadow-sm' 
+                    : 'text-slate-400 hover:bg-slate-950'
+                }`}
+              >
+                <FileSpreadsheet className="h-4 w-4" />
+                Costing Sheet
+              </button>
+              <button
+                onClick={() => setActiveTab('pq2')}
+                className={`flex-1 py-2 px-3 text-xs font-mono font-bold rounded-none flex items-center justify-center gap-1.5 transition-all uppercase tracking-wide cursor-pointer ${
+                  activeTab === 'pq2' 
+                    ? 'bg-cyan-600 text-slate-950 font-black shadow-sm' 
+                    : 'text-slate-400 hover:bg-slate-950'
+                }`}
+              >
+                <Gauge className="h-4 w-4" />
+                PQ² Diagram
+              </button>
             </div>
 
             {/* TAB CONTENTS */}
@@ -959,6 +984,14 @@ export default function App() {
 
               {activeTab === 'defects' && (
                 <DefectExplorer inputs={inputs} outputs={outputs} />
+              )}
+
+              {activeTab === 'costing' && (
+                <PartCostingSheet />
+              )}
+
+              {activeTab === 'pq2' && (
+                <PQ2Diagram inputs={inputs} outputs={outputs} onChange={handleInputChange} />
               )}
             </div>
 
